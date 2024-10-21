@@ -1,0 +1,126 @@
+.edit-profile {
+    padding: 1rem;
+
+}
+
+.profile-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+
+    background-color: white;
+    box-shadow: 0 0 35px 2px rgba(0, 0, 0, 0.123);
+
+    border-radius: 24px;
+    padding: 2rem;
+
+    position: relative;
+
+}
+
+.author-details {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+}
+
+.other-details {
+    display: flex;
+    justify-content: space-between;
+    gap: 2rem;
+    padding: 1rem 0;
+    width: 100%;
+}
+
+.profile-picture {
+    cursor: pointer;
+    border-radius: 50%;
+    width: 8rem;
+    height: 8rem;
+    border: 2px solid black;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+}
+
+.edit-profile input {
+    border: none;
+    font-size: 1rem;
+    background: none;
+    border-radius: 4px;
+}
+
+.edit-profile label {
+    font-size: 0.7rem;
+    font-weight: 500;
+    color: rgb(104, 104, 104);
+}
+
+.other-details input {
+    font-weight: 500;
+    font-size: 1rem;
+}
+
+/* INDIVIDUAL STYLING */
+
+.flexRow {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    gap: 2rem;
+}
+
+#email {
+    width: 16rem;
+}
+
+#full_name {
+    font-size: 1.5rem;
+    font-weight: 500;
+}
+
+.bio-form {
+    width: 100%;
+
+}
+
+#bio {
+    resize: vertical;
+    border: none;
+    width: 100%;
+
+    font-size: 0.9rem;
+    font-weight: 500;
+    background: none;
+}
+
+
+
+input:focus,
+textarea:focus {
+    outline: none;
+    box-shadow: 0 0 10px 2px rgba(0, 0, 0, 0.068);
+}
+
+input:disabled {
+    color: black;
+}
+
+#bio:disabled {
+    resize: none;
+    color: rgb(31, 31, 31);
+    font-size: 0.9rem;
+}
+
+.float-btn {
+    position: absolute;
+    right: 1rem;
+    top: 1rem;
+
+}

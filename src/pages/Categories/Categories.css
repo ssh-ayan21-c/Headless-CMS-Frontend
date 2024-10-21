@@ -1,0 +1,100 @@
+.custom-category-manager {
+    padding: 4rem;
+    padding-top: 2rem;
+}
+
+.custom-category-title {
+    font-weight: 400;
+    text-align: left;
+    margin-bottom: 3rem;
+    color: #0f0f0f;
+}
+
+.custom-input-section {
+    display: flex;
+    justify-content: flex-start;
+    gap: 1rem;
+}
+
+.custom-category-input,
+.custom-category-select {
+    height: 2.5rem;
+    width: 30%;
+    border: 1px solid rgba(0, 0, 0, 0.105);
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    align-items: center;
+    padding: 0.5rem 1rem;
+}
+
+.custom-category-input::placeholder,
+.custom-category-select {
+    font-weight: 500;
+    color: rgb(83, 83, 83);
+    font-size: 0.9rem;
+}
+
+.custom-category-button {
+    padding: 10px 15px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.custom-category-button:hover {
+    background-color: #0056b3;
+}
+
+.custom-category-list {
+    list-style-type: none;
+    padding: 2rem 0;
+}
+
+.custom-category-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem;
+    border-bottom: 1px solid #ddd;
+}
+
+
+.custom-edit-section,
+.custom-view-section {
+    display: flex;
+    align-items: center;
+}
+
+
+.custom-edit-input,
+.custom-edit-select {
+    padding: 5px;
+    margin-right: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.custom-save-button,
+.custom-cancel-button,
+.custom-edit-button,
+.custom-delete-button {
+    padding: 5px 10px;
+    margin-left: 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.custom-save-button:hover,
+.custom-cancel-button:hover,
+.custom-edit-button:hover,
+.custom-delete-button:hover {
+    background-color: #0056b3;
+}
