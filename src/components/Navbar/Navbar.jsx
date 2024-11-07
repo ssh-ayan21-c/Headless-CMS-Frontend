@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 import { useAuthContext } from "../../contexts/auth";
 import { useTheme } from "../../contexts/theme";
 import ProfileButton from "../ProfileButton/ProfileButton";
+import { RiMoonFill, RiSunFill } from "@remixicon/react";
 
 export default function Navbar() {
   const { user } = useAuthContext();
@@ -19,7 +20,6 @@ export default function Navbar() {
         <Link to={"/"}>
           <img className="navbar-logo" src={logo} alt="" />
         </Link>
-        <button onClick={toggleTheme}>Theme</button>
       </div>
       <ul className="nav-list">
         <li className="nav-list-item">
@@ -34,11 +34,15 @@ export default function Navbar() {
       </ul>
 
       <div className="nav-btns">
+        <button className="theme-btn" onClick={toggleTheme}>
+          {theme === "dark" ? (
+            <RiSunFill color="#6d6d6d" />
+          ) : (
+            <RiMoonFill color="#6d6d6d" />
+          )}
+        </button>
         {user ? (
           <div className="logged-nav">
-            <Link to={"/playground/dashboard"} className="playground-btn">
-              Write a Blog
-            </Link>
             <ProfileButton />
           </div>
         ) : (

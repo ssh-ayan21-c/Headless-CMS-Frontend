@@ -7,6 +7,7 @@ export const UserContext = createContext();
 // Create a provider component
 export const UserProvider = ({ children }) => {
   const [userData, setUserData] = useState(null);
+  const [loading, setLoading] = useState(true); // Loading state for user data
 
   const { user } = useAuthContext();
 
@@ -19,14 +20,24 @@ export const UserProvider = ({ children }) => {
         setUserData(data);
       } catch (error) {
         console.error("Error fetching user data:", error);
+      } finally {
+        setLoading(false); // Set loading to false after data is fetched
       }
     };
-    if (user) fetchUserData();
+
+    if (user) {
+      fetchUserData();
+    } else {
+      setLoading(false); // Set loading to false if there is no user
+    }
   }, [user]);
 
   return (
-    <UserContext.Provider value={{ userData }}>{children}</UserContext.Provider>
+    <UserContext.Provider value={{ userData, loading }}>
+      {children}
+    </UserContext.Provider>
   );
 };
+
 // Custom hook to use the UserContext
 export const useUserContext = () => useContext(UserContext);

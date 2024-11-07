@@ -1,15 +1,17 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-// import "./AuthorProfile.css";
 import { useAuthContext } from "../../contexts/auth";
 import { toast } from "react-toastify";
-import TopPanel from "../../components/TopPanel/TopPanel";
+import "./AuthorProfile.css";
+import { useTheme } from "../../contexts/theme";
+
+import { RiFileImageFill } from "@remixicon/react";
 
 function AuthorProfile() {
   const { user } = useAuthContext();
   const [newDp, setNewDp] = useState(null);
-  const [joined, setJoined] = useState("");
   const [inputsDisabled, setInputsDisabled] = useState(true);
+
+  const { theme } = useTheme();
 
   const [formData, setFormData] = useState({
     full_name: "",
@@ -18,8 +20,6 @@ function AuthorProfile() {
     bio: "",
   });
   const [dp, setDp] = useState("");
-  const [error, setError] = useState(null);
-  const [success, setSuccess] = useState(null);
 
   const toggleInputs = () => {
     setInputsDisabled(!inputsDisabled);
@@ -28,7 +28,7 @@ function AuthorProfile() {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const response = await fetch(`/users/${user.id}`, {
+        const response = await fetch(`/api/users/${user.id}`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -37,7 +37,7 @@ function AuthorProfile() {
         });
 
         if (!response.ok) {
-          throw new Error("Failed to fetch user data");
+          toast.error("Failed to fetch user data");
         }
 
         const userData = await response.json();
@@ -48,15 +48,13 @@ function AuthorProfile() {
           bio: userData.bio || "",
         });
         setDp(userData.profile_image_url);
-        const dateOnly = userData.created_at.split("T")[0];
-        setJoined(dateOnly);
       } catch (err) {
-        setError(err.message || "An error occurred");
+        toast.error(err.message || "An error occurred");
       }
     };
 
     fetchUserData();
-  }, [user]);
+  }, [user, inputsDisabled]);
 
   const handleFileChange = (e) => {
     setNewDp(e.target.files[0]);
@@ -68,11 +66,15 @@ function AuthorProfile() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (/\s/.test(formData.username)) {
+      toast.error("Username should not contain spaces");
+      return;
+    }
     if (newDp) {
       formData.append({ profile_image_url: newDp });
     }
     try {
-      const response = await fetch(`/users/${user.id}`, {
+      const response = await fetch(`/api/users/${user.id}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -80,98 +82,79 @@ function AuthorProfile() {
         },
         body: JSON.stringify(formData),
       });
-
-      if (!response.ok) {
-        throw new Error("Failed to update profile");
-      }
       const result = await response.json();
-      setSuccess("Profile updated successfully!");
-      setError(null);
-      setInputsDisabled(true);
-      toast.success(success);
+      console.log(result);
+      if (!response.ok) {
+        toast.error(result.error);
+      } else {
+        setInputsDisabled(true);
+        toast.success(result.message);
+      }
     } catch (err) {
-      setError(err.message || "An error occurred");
-      toast.warn(err);
+      toast.error(err);
     }
   };
 
   return (
-    <div className="edit-profile">
+    <div className={`edit-profile-${theme} edit`}>
       <form className="profile-form" onSubmit={handleSubmit}>
-        {inputsDisabled && (
-          <button className="float-btn" onClick={toggleInputs}>
-            Edit
-          </button>
-        )}
-
-        <div className="flexRow">
-          <div className="form-group dp-holder">
-            <label htmlFor="profile_image_url">
-              <img
-                className="profile-picture"
-                src={dp}
-                alt={formData.username}
-              />
-            </label>
-            <input
-              disabled={inputsDisabled}
-              style={{ display: "none" }}
-              type="file"
-              id="profile_image_url"
-              name="profile_image_url"
-              onChange={handleFileChange}
-            />
-          </div>
-          <div className="author-details">
-            <div className="form-group">
-              <input
-                disabled={inputsDisabled}
-                type="text"
-                id="full_name"
-                name="full_name"
-                value={formData.full_name}
-                onChange={handleChange}
-                required
-              />
-            </div>
-            <div className="other-details">
-              <div className="form-group">
-                <label htmlFor="username">USERNAME</label>
-                <input
-                  disabled={inputsDisabled}
-                  type="text"
-                  id="username"
-                  name="username"
-                  value={formData.username}
-                  onChange={handleChange}
-                  required
-                />
+        <h2 className="form-header">Hi, {formData.full_name.split(" ")[0]}</h2>
+        <div className="form-group dp-holder">
+          <label htmlFor="profile_image_url">
+            {!inputsDisabled && (
+              <div className="img-overlay">
+                <RiFileImageFill color="white" />
               </div>
-              <div className="form-group">
-                <label htmlFor="username">EMAIL</label>
-                <input
-                  disabled={inputsDisabled}
-                  id="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                ></input>
-              </div>
-              <div className="form-group">
-                <label htmlFor="join">MEMBER SINCE</label>
-                <input
-                  disabled={inputsDisabled}
-                  id="join"
-                  name="join"
-                  value={joined}
-                  onChange={handleChange}
-                ></input>
-              </div>
-            </div>
-          </div>
+            )}
+            <img className="profile-picture" src={dp} alt={formData.username} />
+          </label>
+          <input
+            disabled={inputsDisabled}
+            style={{ display: "none" }}
+            type="file"
+            id="profile_image_url"
+            name="profile_image_url"
+            onChange={handleFileChange}
+          />
         </div>
+        <div className="form-group">
+          <label htmlFor="email">Email</label>
+          <input
+            disabled={true}
+            id="email"
+            name="email"
+            value={formData.email}
+            onChange={handleChange}
+          ></input>
+        </div>
+        <div className="form-group">
+          <label htmlFor="username">Full name</label>
+          <input
+            disabled={inputsDisabled}
+            type="text"
+            id="full_name"
+            name="full_name"
+            value={formData.full_name}
+            onChange={handleChange}
+            required
+          />
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="username">Username</label>
+          <input
+            disabled={inputsDisabled}
+            type="text"
+            id="username"
+            name="username"
+            value={formData.username}
+            onChange={handleChange}
+            required
+          />
+        </div>
+
         <div className="form-group bio-form">
-          <label htmlFor="bio">BIO</label>
+          <label htmlFor="bio">Bio</label>
           <textarea
             disabled={inputsDisabled}
             id="bio"
@@ -180,12 +163,17 @@ function AuthorProfile() {
             onChange={handleChange}
           ></textarea>
         </div>
+        {inputsDisabled && (
+          <button className="float-btns edit-btn" onClick={toggleInputs}>
+            Edit
+          </button>
+        )}
         {!inputsDisabled && (
-          <div className="float-btn">
-            <button id="submit-btn" type="submit">
+          <div className="float-btns">
+            <button className="submit-btn" type="submit">
               Save Changes
             </button>
-            <button id="cancel-btn" onClick={toggleInputs}>
+            <button className="cancel-btn" onClick={toggleInputs}>
               Cancel
             </button>
           </div>

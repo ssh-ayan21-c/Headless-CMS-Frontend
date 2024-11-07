@@ -14,6 +14,10 @@ import {
   RiKeyFill,
   RiSidebarFoldLine,
   RiSidebarUnfoldLine,
+  RiLayoutGridFill,
+  RiFunctionFill,
+  RiStackedView,
+  RiEqualizer2Fill,
 } from "@remixicon/react";
 
 import { useTheme } from "../../contexts/theme";
@@ -30,7 +34,7 @@ function LeftPanel() {
   const [expanded, setExpanded] = React.useState(true);
 
   const toggleExpanded = () => {
-    if (expanded == true) {
+    if (expanded === true) {
       setExpanded(!expanded);
     } else {
       setTimeout(() => {
@@ -75,7 +79,7 @@ function LeftPanel() {
             to="/playground/featured-blogs"
             className="panel-nav-link"
           >
-            <RiDonutChartFill />
+            <RiStackedView />
             {!expanded ? null : "Featured Blogs"}
           </NavLink>
           <NavLink
@@ -83,7 +87,7 @@ function LeftPanel() {
             to="/playground/categories"
             className="panel-nav-link"
           >
-            <RiBarChartFill />
+            <RiEqualizer2Fill />
             {!expanded ? null : "Categories"}
           </NavLink>
         </div>
@@ -91,7 +95,7 @@ function LeftPanel() {
       <div className="other-options">
         <NavLink
           activeClassName="active"
-          to="/playground/author-profile"
+          to="/playground/edit-profile"
           className="panel-nav-link"
         >
           <RiAccountCircleFill size={"1.25rem"} />
@@ -99,7 +103,7 @@ function LeftPanel() {
         </NavLink>
         <NavLink
           activeClassName="active"
-          to="/change-password"
+          to="/playground/change-password"
           className="panel-nav-link"
         >
           <RiLockPasswordFill size={"1.25rem"} />
@@ -107,7 +111,7 @@ function LeftPanel() {
         </NavLink>
         <NavLink
           activeClassName="active"
-          to="/get-api-key"
+          to="/playground/get-api-key"
           className="panel-nav-link"
         >
           <RiKeyFill size={"1.25rem"} />

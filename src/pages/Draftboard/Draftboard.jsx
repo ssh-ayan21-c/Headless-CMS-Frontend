@@ -87,11 +87,15 @@ function Draftboard() {
   return (
     <div id="draftboard" className={`draftboard-${theme}`}>
       <div className="editor-top-bar">
-        <SearchBar
-          placeholder={"Search using a keyword"}
-          onSearch={handleOnSearchChange}
-        />
+        <div className="lined-header">
+          <div className="line"></div>
+          <p className="top-bar-header">Blogs</p>
+        </div>
         <div className="dropdowns">
+          <SearchBar
+            placeholder={"Search using a keyword"}
+            onSearch={handleOnSearchChange}
+          />
           <Dropdown
             text={"Category :"}
             defaultText="All"

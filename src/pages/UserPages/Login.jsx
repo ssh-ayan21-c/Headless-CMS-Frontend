@@ -4,6 +4,8 @@ import { useAuthContext } from "../../contexts/auth";
 import { useTheme } from "../../contexts/theme";
 import Footer from "../../components/Footer/Footer";
 
+import { RiEyeFill, RiEyeOffFill } from "@remixicon/react";
+
 const Login = () => {
   const { login } = useAuthContext();
   const { theme } = useTheme();
@@ -15,6 +17,11 @@ const Login = () => {
 
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(null);
+  const [showPassword, setShowPassword] = useState(false);
+  const togglePasswordVisibility = (prev) => {
+    setShowPassword(!prev);
+  };
+
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -69,13 +76,24 @@ const Login = () => {
             <label>
               Password
               <input
-                type="password"
+                type={showPassword ? "text" : "password"}
                 value={formData.password}
                 onChange={(e) =>
                   setFormData({ ...formData, password: e.target.value })
                 }
                 required
               />
+              <button
+                type="button"
+                id="eye-btn"
+                onClick={() => togglePasswordVisibility(showPassword)}
+              >
+                {!showPassword ? (
+                  <RiEyeOffFill size={20} color="white" />
+                ) : (
+                  <RiEyeFill size={20} color="white" />
+                )}
+              </button>
             </label>
             <Link className="forgot">Forgot Password?</Link>
             <button type="submit">Login</button>

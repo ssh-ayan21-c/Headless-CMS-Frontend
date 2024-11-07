@@ -14,7 +14,6 @@ import "./Analytics.css";
 import StatCard from "../../components/StatCard/StatCard";
 import { useUserContext } from "../../contexts/user";
 import { RiAddCircleFill } from "@remixicon/react";
-import { capitalizeFirstLetter } from "../../utils/stringFunctions";
 import Loader from "../../components/Loader/Loader";
 
 const uData = [4000, 3000, 2000, 2780, 1890, 2390, 3490];

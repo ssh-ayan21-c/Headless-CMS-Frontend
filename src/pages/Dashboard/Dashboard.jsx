@@ -26,7 +26,6 @@ function Dashboard() {
       .then((res) => res.json())
       .then((data) => {
         setPublished(data);
-        console.log(data);
         setLoading(false);
       })
       .catch((error) => {
@@ -78,11 +77,15 @@ function Dashboard() {
   return (
     <div id="dashboard" className={`dashboard-${theme}`}>
       <div className="editor-top-bar">
-        <SearchBar
-          placeholder={"Search using a keyword"}
-          onSearch={handleOnSearchChange}
-        />
+        <div className="lined-header">
+          <div className="line"></div>
+          <p className="top-bar-header">Featured Blogs</p>
+        </div>
         <div className="dropdowns">
+          <SearchBar
+            placeholder={"Search using a keyword"}
+            onSearch={handleOnSearchChange}
+          />
           <Dropdown
             text={"Category :"}
             defaultText="All"

@@ -49,6 +49,7 @@
     font-weight: 500;
     padding: 0.5rem 1rem;
     border-radius: 3rem;
+    font-size: 1;
 }
 
 .nav-list-item:hover * {
@@ -71,7 +72,7 @@
 
 .nav-btns {
     display: flex;
-    gap: 2rem;
+    gap: 1rem;
     width: 30%;
     justify-content: flex-end;
 }
@@ -112,4 +113,14 @@
     display: flex;
     gap: 1rem;
     align-items: center;
+}
+
+.theme-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid var(--bor);
+    width: 3rem;
+    background: none;
+    border-radius: 12px;
 }

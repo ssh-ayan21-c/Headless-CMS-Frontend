@@ -31,18 +31,22 @@ function Author() {
   const { theme } = useTheme();
 
   const followAuthor = async () => {
-    await fetch(`/api/users/follow/${id}`, {
-      method: "POST",
-      headers: { Authorization: user.token },
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        setFollowed(!followed);
-        toast.success(data.message);
+    if (id && user) {
+      await fetch(`/api/users/follow/${id}`, {
+        method: "POST",
+        headers: { Authorization: user.token },
       })
-      .catch((error) => {
-        toast.error(error);
-      });
+        .then((res) => res.json())
+        .then((data) => {
+          setFollowed(!followed);
+          toast.success(data.message);
+        })
+        .catch((error) => {
+          toast.error(error);
+        });
+    } else {
+      toast.error("Please login to follow the author");
+    }
   };
 
   const fetchAuthor = async () => {
@@ -76,11 +80,11 @@ function Author() {
   };
 
   useEffect(() => {
-    if (id && user) {
+    if (id) {
       fetchAuthor();
       fetchPublishedByAuthor();
     }
-  }, [id, user]);
+  }, [id]);
 
   const handleImageLoaded = () => {
     setImgLoading(false);
@@ -92,14 +96,16 @@ function Author() {
       <div id="author-page" className={`author-page-${theme}`}>
         <div className="author-details">
           <div className="top-header">
-            <div className="author-header">
+            <div className="lined-header">
               <div className="line"></div>
               <p>Author Details</p>
             </div>
 
-            <button className="follow-btn" onClick={followAuthor}>
-              {!followed ? "Follow" : "Unfollow"}
-            </button>
+            {user && (
+              <button className="follow-btn" onClick={followAuthor}>
+                {!followed ? "Follow" : "Unfollow"}
+              </button>
+            )}
           </div>
 
           <div className="author-info2">

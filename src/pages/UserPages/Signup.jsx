@@ -5,11 +5,22 @@ import { toast } from "react-toastify";
 import Footer from "../../components/Footer/Footer";
 
 import { useTheme } from "../../contexts/theme";
+import {
+  RiAccountCircleFill,
+  RiCheckboxCircleFill,
+  RiCloseCircleFill,
+  RiEyeFill,
+  RiEyeOffFill,
+  RiImage2Fill,
+} from "@remixicon/react";
 
 const Signup = () => {
   const navigate = useNavigate();
   const { theme } = useTheme();
   const [step, setStep] = useState(1);
+
+  const [usernames, setUsernames] = useState([]);
+  const [showPassword, setShowPassword] = useState(false);
 
   const [formData, setFormData] = useState({
     full_name: "",
@@ -20,10 +31,39 @@ const Signup = () => {
     profileImage: null,
   });
 
+  const [hasMinLength, setHasMinLength] = useState(false);
+  const [hasNumber, setHasNumber] = useState(false);
+  const [hasCapital, setHasCapital] = useState(false);
+  const [hasSymbol, setHasSymbol] = useState(false);
+
+  const togglePasswordVisibility = (prev) => {
+    setShowPassword(!prev);
+  };
+
+  const updateConditions = (password) => {
+    setHasMinLength(password.length >= 8);
+    setHasNumber(/\d/.test(password));
+    setHasCapital(/[A-Z]/.test(password));
+    setHasSymbol(/[!@#$%^&*(),.?":{}|<>]/.test(password));
+  };
+
   const [error, setError] = useState(null);
+  const [message, setMessage] = useState("");
+
+  const fetchUsernames = async () => {
+    try {
+      const response = await fetch("/api/users/get-usernames");
+      const data = await response.json();
+      setUsernames(data.usernames);
+    } catch (error) {
+      console.error("Error fetching usernames:", error);
+    }
+  };
 
   const handleNext = () => {
-    setStep(step + 1);
+    if (!formData.email) toast.warn("Please enter your email");
+    else if (!formData.full_name) toast.warn("Please enter your full name");
+    else setStep(step + 1);
   };
   const handleBack = () => {
     setStep(step - 1);
@@ -37,6 +77,23 @@ const Signup = () => {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
+  };
+
+  const handleUsernameChange = (e) => {
+    fetchUsernames();
+    const { value } = e.target;
+    if (usernames && Array.isArray(usernames) && usernames.includes(value)) {
+      setMessage("Username already taken");
+    } else {
+      setMessage("Username available");
+    }
+    setFormData({ ...formData, username: value });
+  };
+
+  const handlePasswordChange = (e) => {
+    const { value } = e.target;
+    updateConditions(value);
+    setFormData({ ...formData, password: value });
   };
 
   const handleSubmit = async (e) => {
@@ -119,55 +176,115 @@ const Signup = () => {
                     type="text"
                     name="username"
                     value={formData.username}
-                    onChange={handleChange}
+                    onChange={handleUsernameChange}
                     className="signup-input"
                     required
                   />
+                  {message && formData.username && (
+                    <div
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        padding: "5px 0",
+                        gap: "5px",
+                      }}
+                    >
+                      {message === "Username already taken" ? (
+                        <RiCloseCircleFill size={20} color="red" />
+                      ) : (
+                        <RiCheckboxCircleFill size={20} color="green" />
+                      )}
+                      <p>{message}</p>
+                    </div>
+                  )}
                 </label>
                 <label className="signup-label">
                   Password
                   <input
-                    type="password"
+                    type={showPassword ? "text" : "password"}
                     name="password"
                     value={formData.password}
-                    onChange={handleChange}
+                    onChange={handlePasswordChange}
                     className="signup-input"
                     required
                   />
+                  <button
+                    type="button"
+                    id="eye-btn"
+                    onClick={() => togglePasswordVisibility(showPassword)}
+                  >
+                    {!showPassword ? (
+                      <RiEyeOffFill size={20} color="white" />
+                    ) : (
+                      <RiEyeFill size={20} color="white" />
+                    )}
+                  </button>
                 </label>
-                <label className="signup-label">
-                  Confirm Password
-                  <input
-                    type="password"
-                    name="confirmPassword"
-                    value={formData.confirmPassword}
-                    onChange={handleChange}
-                    className="signup-input"
-                    required
-                  />
-                </label>
+                <div className="password-conditions">
+                  <div>
+                    {hasMinLength ? (
+                      <RiCheckboxCircleFill size={20} color="green" />
+                    ) : (
+                      <RiCloseCircleFill size={20} color="red" />
+                    )}
+                    <p className="condition">At least 8 characters</p>
+                  </div>
+                  <div>
+                    {hasNumber ? (
+                      <RiCheckboxCircleFill size={20} color="green" />
+                    ) : (
+                      <RiCloseCircleFill size={20} color="red" />
+                    )}
+                    <p className="condition">At least 1 number</p>
+                  </div>
+                  <div>
+                    {hasCapital ? (
+                      <RiCheckboxCircleFill size={20} color="green" />
+                    ) : (
+                      <RiCloseCircleFill size={20} color="red" />
+                    )}
+                    <p className="condition">At least 1 capital letter</p>
+                  </div>
+                  <div>
+                    {hasSymbol ? (
+                      <RiCheckboxCircleFill size={20} color="green" />
+                    ) : (
+                      <RiCloseCircleFill size={20} color="red" />
+                    )}
+                    <p className="condition">At least 1 symbol</p>
+                  </div>
+                </div>
               </>
             )}
 
             {step === 3 && (
               <>
-                <label>
-                  Bio:
-                  <textarea
-                    name="bio"
-                    value={formData.bio}
-                    onChange={handleChange}
-                  ></textarea>
-                </label>
-                <label className="signup-label">
-                  Profile Image
+                <label id="profile-label">
+                  <RiAccountCircleFill size={75} />
+                  {formData.profileImage ? (
+                    formData.profileImage.name
+                  ) : (
+                    <span>Add Profile Picture</span>
+                  )}
                   <input
+                    hidden="true"
                     type="file"
                     name="profileImage"
                     onChange={handleFileChange}
                     className="signup-file-input"
                   />
                 </label>
+
+                <label>
+                  Bio:
+                  <textarea
+                    name="bio"
+                    value={formData.bio}
+                    onChange={handleChange}
+                    className="signup-textarea"
+                  ></textarea>
+                </label>
+
                 <button type="submit" className="signup-button">
                   Sign Up
                 </button>

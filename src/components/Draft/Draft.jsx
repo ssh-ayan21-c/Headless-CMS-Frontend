@@ -17,6 +17,22 @@ function Draft({ blog }) {
     setMenu(!menu);
   };
 
+  const handleDraft = () => {
+    fetch(`/api/blogs/move-to-drafts?blog=${blog._id}`, {
+      method: "POST",
+      headers: { Authorization: user.token },
+    })
+      .then((res) => res.json())
+      .then((result) => {
+        setRefresh((prev) => !prev);
+        toast.success(result);
+      })
+      .catch((error) => {
+        toast.error(error);
+      });
+    openMenu();
+  };
+
   const handleDelete = () => {
     fetch(`/api/blogs/delete-from-drafts?blog=${blog._id}`, {
       method: "POST",
@@ -30,6 +46,7 @@ function Draft({ blog }) {
       .catch((error) => {
         toast.error(error);
       });
+    openMenu();
   };
 
   const handlePublish = () => {
@@ -73,7 +90,12 @@ function Draft({ blog }) {
         <>
           <div className="background-layer" onClick={openMenu}></div>
           <div className="kebab-menu">
-            <button onClick={handleDelete}>Delete</button>
+            <button id="kebab-menu-btn" onClick={handleDraft}>
+              Unpublish
+            </button>
+            <button id="kebab-menu-btn" onClick={handleDelete}>
+              Delete
+            </button>
           </div>
         </>
       )}

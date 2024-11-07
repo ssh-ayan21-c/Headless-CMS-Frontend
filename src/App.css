@@ -10,3 +10,23 @@
    margin: 0;
    font-family: Inter;
  }
+
+ input:focus {
+   outline: none;
+ }
+
+ .lined-header {
+   display: flex;
+   align-items: center;
+   gap: 1rem;
+   font-family: 'Bricolage Grotesque', sans-serif;
+   font-size: 1.75rem;
+   color: var(--p);
+ }
+
+ .line {
+   width: 5px;
+   height: 2rem;
+   background-color: var(--pri);
+   border-radius: 3px;
+ }

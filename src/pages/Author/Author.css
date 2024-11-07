@@ -181,26 +181,12 @@
     border: none;
 }
 
-.author-header .line {
-    width: 5px;
-    height: 2rem;
-    background-color: var(--pri);
-    border-radius: 3px;
-}
+
 
 .top-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-}
-
-.author-header {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    font-family: 'Bricolage Grotesque', sans-serif;
-    font-size: 1.75rem;
-    color: var(--p);
 }
 
 .follow-btn {

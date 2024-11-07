@@ -122,8 +122,8 @@ function BlogRead() {
   };
 
   useEffect(() => {
-    if (id && user) fetchBlogDetails();
-  }, [id, user]);
+    if (id) fetchBlogDetails();
+  }, [id]);
 
   const handleImageLoaded = () => {
     setImgLoading(false);

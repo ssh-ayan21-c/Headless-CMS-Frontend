@@ -9,10 +9,9 @@ import {
   RiArrowDownSLine,
   RiArrowUpSLine,
   RiLogoutCircleLine,
-  RiSettings3Fill,
   RiNotification4Fill,
 } from "@remixicon/react";
-import { capitalizeFirstLetter } from "../../utils/stringFunctions";
+
 import { useTheme } from "../../contexts/theme";
 
 function ProfileButton() {
@@ -27,7 +26,7 @@ function ProfileButton() {
   };
 
   if (!userData) {
-    return null;
+    return <p>Loading...</p>;
   }
 
   return (
@@ -35,9 +34,7 @@ function ProfileButton() {
       <div className="nav-account" onClick={toggleMenu}>
         <img src={userData?.profile_image_url} alt="" className="dp" />
         <div className="acc-details">
-          <p className="acc-name">
-            {capitalizeFirstLetter(userData?.full_name)}
-          </p>
+          <p className="acc-name">{userData?.full_name}</p>
           <p className="acc-email">@{userData?.username}</p>
         </div>
         {menuVisible ? (
@@ -63,9 +60,6 @@ function ProfileButton() {
             <RiNotification4Fill />
             Notifications
           </Link>
-          <button className="theme-btn" onClick={toggleTheme}>
-            Change Mode
-          </button>
           <button className="logout-btn" onClick={logout}>
             <RiLogoutCircleLine />
             Logout
