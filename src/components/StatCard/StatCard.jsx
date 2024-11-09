@@ -35,7 +35,11 @@ const colorFills = {
 };
 
 function StatCard({ data, color, header, desc, value }) {
-  const daysInWeek = getDaysInMonth(4, 2024);
+  const today = new Date();
+  const currentMonth = today.getMonth() + 1; // getMonth() is zero-based
+  const currentYear = today.getFullYear();
+  const daysInWeek = getDaysInMonth(currentMonth, currentYear);
+
   return (
     <div className="stat-card">
       <p className="stat-header">{header}</p>

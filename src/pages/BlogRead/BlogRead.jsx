@@ -33,8 +33,6 @@ function BlogRead() {
   const [imgLoading, setImgLoading] = useState(true);
 
   const formData = new FormData();
-  formData.append("comment", "This is a test comment");
-  console.log(formData.get("comment"));
 
   const followAuthor = async () => {
     if (user) {
@@ -56,22 +54,22 @@ function BlogRead() {
   };
 
   const likeBlog = async () => {
-    if (user) {
-      await fetch(`/api/blogs/like/${id}`, {
-        method: "POST",
-        headers: { Authorization: user.token },
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          setLiked(!liked);
-          toast.success(data);
-        })
-        .catch((error) => {
-          toast.error(error);
-        });
-    } else {
-      toast.error("Please login to like the blog");
-    }
+    // if (user) {
+    //   await fetch(`/api/blogs/like/${id}`, {
+    //     method: "POST",
+    //     headers: { Authorization: user.token },
+    //   })
+    //     .then((res) => res.json())
+    //     .then((data) => {
+    //       setLiked(!liked);
+    //       toast.success(data);
+    //     })
+    //     .catch((error) => {
+    //       toast.error(error);
+    //     });
+    // } else {
+    //   toast.error("Please login to like the blog");
+    // }
   };
 
   const commentOnBlog = async () => {
@@ -123,7 +121,7 @@ function BlogRead() {
 
   useEffect(() => {
     if (id) fetchBlogDetails();
-  }, [id]);
+  }, []);
 
   const handleImageLoaded = () => {
     setImgLoading(false);

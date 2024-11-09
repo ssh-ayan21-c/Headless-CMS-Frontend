@@ -17,7 +17,7 @@
 }
 
 .catboard {
-    padding: 2rem;
+    padding: 1rem 2rem;
 }
 
 .categories-container {
@@ -26,7 +26,6 @@
     overflow: hidden;
     color: var(--txt);
     border-radius: 1rem;
-    margin-top: 1rem;
 }
 
 
@@ -49,8 +48,8 @@
     border-radius: 8px;
     font-size: 1rem;
     padding: 0.5rem 1rem;
-    padding-left: 2.5rem;
     color: var(--txt);
+    height: 100%;
 }
 
 .custom-category-input::placeholder {

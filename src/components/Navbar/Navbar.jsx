@@ -23,19 +23,18 @@ export default function Navbar() {
       </div>
       <ul className="nav-list">
         <li className="nav-list-item">
-          <Link to={"/"}>About</Link>
+          <Link to={"/blogs"}>Blogs</Link>
         </li>
         <li className="nav-list-item">
-          <Link to={"/"}>Contact</Link>
+          <Link to={"/"}>Documentation</Link>
         </li>
         <li className="nav-list-item">
-          <Link to={"/blogs"}>Discover Blogs</Link>
+          <Link to={"/"}>Components</Link>
         </li>
       </ul>
-
       <div className="nav-btns">
         <button className="theme-btn" onClick={toggleTheme}>
-          {theme === "dark" ? (
+          {theme !== "dark" ? (
             <RiSunFill color="#6d6d6d" />
           ) : (
             <RiMoonFill color="#6d6d6d" />

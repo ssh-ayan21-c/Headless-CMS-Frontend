@@ -25,7 +25,7 @@ function Draftboard() {
   const { theme } = useTheme();
 
   const fetchDrafts = async () => {
-    fetch(`/api/blogs/get-drafts/${user?.id}`, {
+    fetch(`/api/blogs/get-blogs-by-user/${user?.id}`, {
       method: "GET",
       headers: { Authorization: user.token },
     })

@@ -8,14 +8,10 @@ import {
   RiDashboardFill,
   RiDonutChartFill,
   RiAccountCircleFill,
-  RiBarChartFill,
-  RiArrowLeftFill,
   RiLockPasswordFill,
   RiKeyFill,
   RiSidebarFoldLine,
   RiSidebarUnfoldLine,
-  RiLayoutGridFill,
-  RiFunctionFill,
   RiStackedView,
   RiEqualizer2Fill,
 } from "@remixicon/react";
@@ -116,10 +112,6 @@ function LeftPanel() {
         >
           <RiKeyFill size={"1.25rem"} />
           {!expanded ? null : "API Keys"}
-        </NavLink>
-        <NavLink activeClassName="active" to="/" className="panel-nav-link">
-          <RiArrowLeftFill size={"1.25rem"} />
-          {!expanded ? null : "Home"}
         </NavLink>
       </div>
     </div>

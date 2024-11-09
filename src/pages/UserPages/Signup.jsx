@@ -11,7 +11,6 @@ import {
   RiCloseCircleFill,
   RiEyeFill,
   RiEyeOffFill,
-  RiImage2Fill,
 } from "@remixicon/react";
 
 const Signup = () => {
@@ -98,11 +97,6 @@ const Signup = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    if (formData.password !== formData.confirmPassword) {
-      setError("Passwords do not match");
-      return;
-    }
 
     const formDataToSend = new FormData();
     formDataToSend.append("full_name", formData.full_name);

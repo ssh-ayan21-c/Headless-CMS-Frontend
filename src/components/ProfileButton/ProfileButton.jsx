@@ -9,6 +9,7 @@ import {
   RiArrowDownSLine,
   RiArrowUpSLine,
   RiLogoutCircleLine,
+  RiArrowLeftFill,
   RiNotification4Fill,
 } from "@remixicon/react";
 
@@ -51,6 +52,10 @@ function ProfileButton() {
             to={"/playground/dashboard"}
           >
             Dashboard
+          </Link>
+          <Link onClick={toggleMenu} to="/" className="panel-nav-link">
+            <RiArrowLeftFill size={"1.25rem"} />
+            Home
           </Link>
           <Link
             className="profile-dd-link"

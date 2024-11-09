@@ -6,29 +6,25 @@ export const UserContext = createContext();
 
 // Create a provider component
 export const UserProvider = ({ children }) => {
-  const [userData, setUserData] = useState(null);
-  const [loading, setLoading] = useState(true); // Loading state for user data
+  const [userData, setUserData] = useState(null); // Loading state for user data
 
-  const { user } = useAuthContext();
+  const { user, loading } = useAuthContext();
 
   useEffect(() => {
     // Fetch user data from an API or other source
     const fetchUserData = async () => {
       try {
+        if (loading) return;
         const response = await fetch(`/api/users/${user?.id}`);
         const data = await response.json();
         setUserData(data);
       } catch (error) {
         console.error("Error fetching user data:", error);
-      } finally {
-        setLoading(false); // Set loading to false after data is fetched
       }
     };
 
     if (user) {
       fetchUserData();
-    } else {
-      setLoading(false); // Set loading to false if there is no user
     }
   }, [user]);
 

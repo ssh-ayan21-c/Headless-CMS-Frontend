@@ -22,7 +22,7 @@ function Dashboard() {
   const { theme } = useTheme();
 
   const fetchPublished = async () => {
-    await fetch(`/api/blogs/get-published/${user?.id}`, { method: "GET" })
+    await fetch(`/api/blogs/get-featured/${user?.id}`, { method: "GET" })
       .then((res) => res.json())
       .then((data) => {
         setPublished(data);
